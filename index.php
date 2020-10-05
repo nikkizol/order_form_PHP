@@ -9,15 +9,35 @@ error_reporting(E_ALL);
 
 //we are going to use session variables so we need to enable sessions
 session_start();
+//SET SESSIONS TO DEFAULT
+
+if (!isset($_SESSION["semail"])){
+    $_SESSION["semail"]="";
+}
+if (!isset($_SESSION["sstreet"])){
+    $_SESSION["sstreet"]="";
+}
+
+if (!isset($_SESSION["sstreetnumber"])){
+    $_SESSION["sstreetnumber"]="";
+}
+
+if (!isset($_SESSION["scity"])){
+    $_SESSION["scity"]="";
+}
+
+if (!isset($_SESSION["szipcode"])){
+    $_SESSION["szipcode"]="";
+}
 
 function whatIsHappening()
 {
-    echo '<h2>$_GET</h2>';
-    var_dump($_GET);
-    echo '<h2>$_POST</h2>';
-    var_dump($_POST);
-    echo '<h2>$_COOKIE</h2>';
-    var_dump($_COOKIE);
+//    echo '<h2>$_GET</h2>';
+//    var_dump($_GET);
+//    echo '<h2>$_POST</h2>';
+//    var_dump($_POST);
+//    echo '<h2>$_COOKIE</h2>';
+//    var_dump($_COOKIE);
     echo '<h2>$_SESSION</h2>';
     var_dump($_SESSION);
 }
@@ -90,10 +110,18 @@ if (isset ($_POST["zipcode"])) {
     }
 }
 
-if (empty($emailErr) && empty($streetErr)  && empty($streetNumbErr)  && empty($cityErr)  && empty($zipcodeErr)) {
-    echo "good";
-} else {
-    echo "fix";
+
+if (isset($_POST['submit'])) {
+    if (empty($emailErr) && empty($streetErr) && empty($streetNumbErr) && empty($cityErr) && empty($zipcodeErr)) {
+        echo "<script type='text/javascript'>alert('Thank you');</script>";
+    }
+$_SESSION["semail"]=$email;
+$_SESSION["sstreet"]=$street;
+$_SESSION["sstreetnumber"]=$streetNumber;
+$_SESSION["scity"]=$city;
+$_SESSION["szipcode"]=$zipcode;
 }
+
+whatIsHappening();
 
 require 'form-view.php';
