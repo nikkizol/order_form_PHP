@@ -1,11 +1,17 @@
 <?php
 //this line makes PHP behave in a more strict way
+
 declare(strict_types=1);
+ini_set('display_errors', "1");
+ini_set('display_startup_errors', "1");
+error_reporting(E_ALL);
+
 
 //we are going to use session variables so we need to enable sessions
 session_start();
 
-function whatIsHappening() {
+function whatIsHappening()
+{
     echo '<h2>$_GET</h2>';
     var_dump($_GET);
     echo '<h2>$_POST</h2>';
@@ -17,6 +23,7 @@ function whatIsHappening() {
 }
 
 //your products with their price.
+
 $products = [
     ['name' => 'Club Ham', 'price' => 3.20],
     ['name' => 'Club Cheese', 'price' => 3],
@@ -33,5 +40,60 @@ $products = [
 ];
 
 $totalValue = 0;
+
+// define variables and set to empty values
+$emailErr = $streetErr = $streetNumbErr = $cityErr = $zipcodeErr = "";
+$emailG = $streetG = $streetNumbG = $cityG = $zipcodeG = "";
+
+if (isset ($_POST["email"])) {
+    $email = $_POST["email"];
+    if (!empty (filter_var($email, FILTER_VALIDATE_EMAIL))) {
+        $emailG = "Good";
+    } else {
+        $emailErr = "* is not a valid email address";
+    }
+}
+
+if (isset ($_POST["street"])) {
+    $street = $_POST["street"];
+    if (!empty (preg_match("/^[a-zA-Z\s]+$/", $street))) {
+        $streetG = "Good";
+    } else {
+        $streetErr = "* is a required field";
+    }
+}
+
+if (isset ($_POST["streetnumber"])) {
+    $streetNumber = $_POST["streetnumber"];
+    if (is_numeric($streetNumber)) {
+        $streetNumbG = "Good";
+    } else {
+        $streetNumbErr = "* is not a valid Street number";
+    }
+}
+
+if (isset ($_POST["city"])) {
+    $city = $_POST["city"];
+    if (!empty (preg_match("/^[a-zA-Z\s]+$/", $city))) {
+        $cityG = "Good";
+    } else {
+        $cityErr = "* is not a valid city";
+    }
+}
+
+if (isset ($_POST["zipcode"])) {
+    $zipcode = $_POST["zipcode"];
+    if (is_numeric($zipcode)) {
+        $zipcodeG = "Good";
+    } else {
+        $zipcodeErr = "* is not a valid zipcode";
+    }
+}
+
+if (empty($emailErr) && empty($streetErr)  && empty($streetNumbErr)  && empty($cityErr)  && empty($zipcodeErr)) {
+    echo "good";
+} else {
+    echo "fix";
+}
 
 require 'form-view.php';

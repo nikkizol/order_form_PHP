@@ -8,6 +8,10 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css"
           rel="stylesheet"/>
     <title>Order food & drinks</title>
+    <style>
+        .error {color: #FF0000;}
+        .good {color: green;}
+    </style>
 </head>
 <body>
 <div class="container">
@@ -26,7 +30,9 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
-                <input type="text" id="email" name="email" class="form-control"/>
+                <input type="text" id="email" name="email" class="form-control" value="<?php echo isset($_POST["email"])?$_POST["email"]:""; ?>"/>
+                <span class="error"><?php echo $emailErr;?></span>
+                <span class="good"><?php echo $emailG;?></span>
             </div>
             <div></div>
         </div>
@@ -37,21 +43,29 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="street">Street:</label>
-                    <input type="text" name="street" id="street" class="form-control">
+                    <input type="text" name="street" id="street" class="form-control" value="<?php echo isset($_POST["street"])?$_POST["street"]:""; ?>">
+                    <span class="error"><?php echo $streetErr;?></span>
+                    <span class="good"><?php echo $streetG;?></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number:</label>
-                    <input type="text" id="streetnumber" name="streetnumber" class="form-control">
+                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo isset($_POST["streetnumber"])?$_POST["streetnumber"]:""; ?>">
+                    <span class="error"><?php echo $streetNumbErr;?></span>
+                    <span class="good"><?php echo $streetNumbG;?></span>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" class="form-control">
+                    <input type="text" id="city" name="city" class="form-control" value="<?php echo isset($_POST["city"])?$_POST["city"]:""; ?>">
+                    <span class="error"><?php echo $cityErr;?></span>
+                    <span class="good"><?php echo $cityG;?></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
-                    <input type="text" id="zipcode" name="zipcode" class="form-control">
+                    <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?php echo isset($_POST["zipcode"])?$_POST["zipcode"]:""; ?>">
+                    <span class="error"><?php echo $zipcodeErr;?></span>
+                    <span class="good"><?php echo $zipcodeG;?></span>
                 </div>
             </div>
         </fieldset>
