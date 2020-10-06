@@ -69,57 +69,58 @@ $totalValue = 0;
 $emailErr = $streetErr = $streetNumbErr = $cityErr = $zipcodeErr = $productsErr = "";
 $emailG = $streetG = $streetNumbG = $cityG = $zipcodeG = $productsG = "";
 
-if (isset ($_POST["email"])) {
-    $email = $_POST["email"];
-    if (!empty (filter_var($email, FILTER_VALIDATE_EMAIL))) {
-        $emailG = "Good";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset ($_POST["email"])) {
+        $email = $_POST["email"];
+        if (!empty (filter_var($email, FILTER_VALIDATE_EMAIL))) {
+            $emailG = "Good";
+        } else {
+            $emailErr = "* is not a valid email address";
+        }
+    }
+
+    if (isset ($_POST["street"])) {
+        $street = $_POST["street"];
+        if (!empty (preg_match("/^[a-zA-Z\s]+$/", $street))) {
+            $streetG = "Good";
+        } else {
+            $streetErr = "* is a required field";
+        }
+    }
+
+    if (isset ($_POST["streetnumber"])) {
+        $streetNumber = $_POST["streetnumber"];
+        if (is_numeric($streetNumber)) {
+            $streetNumbG = "Good";
+        } else {
+            $streetNumbErr = "* is not a valid Street number";
+        }
+    }
+
+    if (isset ($_POST["city"])) {
+        $city = $_POST["city"];
+        if (!empty (preg_match("/^[a-zA-Z\s]+$/", $city))) {
+            $cityG = "Good";
+        } else {
+            $cityErr = "* is not a valid city";
+        }
+    }
+
+    if (isset ($_POST["zipcode"])) {
+        $zipcode = $_POST["zipcode"];
+        if (is_numeric($zipcode)) {
+            $zipcodeG = "Good";
+        } else {
+            $zipcodeErr = "* is not a valid zipcode";
+        }
+    }
+
+    if (!isset($_POST["products"])) {
+        $productsErr = "* You must select at least one item!";
     } else {
-        $emailErr = "* is not a valid email address";
+        $productsG = "Good";
     }
 }
-
-if (isset ($_POST["street"])) {
-    $street = $_POST["street"];
-    if (!empty (preg_match("/^[a-zA-Z\s]+$/", $street))) {
-        $streetG = "Good";
-    } else {
-        $streetErr = "* is a required field";
-    }
-}
-
-if (isset ($_POST["streetnumber"])) {
-    $streetNumber = $_POST["streetnumber"];
-    if (is_numeric($streetNumber)) {
-        $streetNumbG = "Good";
-    } else {
-        $streetNumbErr = "* is not a valid Street number";
-    }
-}
-
-if (isset ($_POST["city"])) {
-    $city = $_POST["city"];
-    if (!empty (preg_match("/^[a-zA-Z\s]+$/", $city))) {
-        $cityG = "Good";
-    } else {
-        $cityErr = "* is not a valid city";
-    }
-}
-
-if (isset ($_POST["zipcode"])) {
-    $zipcode = $_POST["zipcode"];
-    if (is_numeric($zipcode)) {
-        $zipcodeG = "Good";
-    } else {
-        $zipcodeErr = "* is not a valid zipcode";
-    }
-}
-
-if (!isset($_POST["products"])) {
-    $productsErr = "* You must select at least one item!";
-} else {
-    $productsG = "Good";
-}
-
 if (isset($_POST['submit'])) {
     if (empty($emailErr) && empty($streetErr) && empty($streetNumbErr) && empty($cityErr) && empty($zipcodeErr)) {
         echo "<script type='text/javascript'>alert('Thank you');</script>";
@@ -142,6 +143,7 @@ if (isset($_POST['submit'])) {
     }
 
 }
+
 whatIsHappening();
 
 if (isset($_GET['food'])) {
