@@ -81,7 +81,7 @@
         </fieldset>
 
         <fieldset>
-            <legend>Products</legend>hh
+            <legend>Products</legend>
             <?php foreach ($products as $i => $product): ?>
                 <label>
                     <input type="checkbox" value="<?php echo $product['name']; ?>" <?php if (isset($_SESSION["sproducts"]) && in_array($product['name'], $_SESSION["sproducts"])) { echo "checked='checked'"; } ?> name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?>
@@ -90,7 +90,7 @@
         </fieldset>
 
         <label>
-            <input type="checkbox" name="express_delivery" value="5"/>
+            <input type="checkbox" name="express_delivery" value="5" <?php if (isset($_POST['express_delivery'])) echo "checked='checked'"; ?>/>
             Express delivery (+ 5 EUR)
         </label>
 

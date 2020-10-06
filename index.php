@@ -121,10 +121,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $productsG = "Good";
     }
 }
+
 if (isset($_POST['submit'])) {
     if (empty($emailErr) && empty($streetErr) && empty($streetNumbErr) && empty($cityErr) && empty($zipcodeErr)) {
-        echo "<script type='text/javascript'>alert('Thank you');</script>";
-    }
+        if (!isset($_POST['express_delivery'])) {
+            $msg = date("H:i", strtotime('+2 hours'));
+        } else {
+            $msg = date("H:i", strtotime('+45 minutes'));
+        }
+        echo  '<div class="p-3 mb-2 bg-success text-white">Thank you for your order! The estimated time of delivery '.$msg.'</div>';
+    };
     $_SESSION["semail"] = $email;
     $_SESSION["sstreet"] = $street;
     $_SESSION["sstreetnumber"] = $streetNumber;
