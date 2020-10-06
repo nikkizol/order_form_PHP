@@ -11,23 +11,27 @@ error_reporting(E_ALL);
 session_start();
 //SET SESSIONS TO DEFAULT
 
-if (!isset($_SESSION["semail"])){
-    $_SESSION["semail"]="";
+if (!isset($_SESSION["semail"])) {
+    $_SESSION["semail"] = "";
 }
-if (!isset($_SESSION["sstreet"])){
-    $_SESSION["sstreet"]="";
-}
-
-if (!isset($_SESSION["sstreetnumber"])){
-    $_SESSION["sstreetnumber"]="";
+if (!isset($_SESSION["sstreet"])) {
+    $_SESSION["sstreet"] = "";
 }
 
-if (!isset($_SESSION["scity"])){
-    $_SESSION["scity"]="";
+if (!isset($_SESSION["sstreetnumber"])) {
+    $_SESSION["sstreetnumber"] = "";
 }
 
-if (!isset($_SESSION["szipcode"])){
-    $_SESSION["szipcode"]="";
+if (!isset($_SESSION["scity"])) {
+    $_SESSION["scity"] = "";
+}
+
+if (!isset($_SESSION["szipcode"])) {
+    $_SESSION["szipcode"] = "";
+}
+
+if (!isset($_SESSION["sproducts"])) {
+    $_SESSION["sproducts"] = [];
 }
 
 function whatIsHappening()
@@ -62,8 +66,8 @@ $products = [
 $totalValue = 0;
 
 // define variables and set to empty values
-$emailErr = $streetErr = $streetNumbErr = $cityErr = $zipcodeErr = "";
-$emailG = $streetG = $streetNumbG = $cityG = $zipcodeG = "";
+$emailErr = $streetErr = $streetNumbErr = $cityErr = $zipcodeErr = $productsErr = "";
+$emailG = $streetG = $streetNumbG = $cityG = $zipcodeG = $productsG = "";
 
 if (isset ($_POST["email"])) {
     $email = $_POST["email"];
@@ -110,18 +114,34 @@ if (isset ($_POST["zipcode"])) {
     }
 }
 
+if (!isset($_POST["products"])) {
+    $productsErr = "* You must select at least one item!";
+} else {
+    $productsG = "Good";
+}
 
 if (isset($_POST['submit'])) {
     if (empty($emailErr) && empty($streetErr) && empty($streetNumbErr) && empty($cityErr) && empty($zipcodeErr)) {
         echo "<script type='text/javascript'>alert('Thank you');</script>";
     }
-$_SESSION["semail"]=$email;
-$_SESSION["sstreet"]=$street;
-$_SESSION["sstreetnumber"]=$streetNumber;
-$_SESSION["scity"]=$city;
-$_SESSION["szipcode"]=$zipcode;
-}
+    $_SESSION["semail"] = $email;
+    $_SESSION["sstreet"] = $street;
+    $_SESSION["sstreetnumber"] = $streetNumber;
+    $_SESSION["scity"] = $city;
+    $_SESSION["szipcode"] = $zipcode;
+    if (isset($_POST['products'])) {
+        foreach ($_POST['products'] as $value) {
+            $array = array_push($_SESSION["sproducts"], $value);
+            $_SESSION["sproducts"] = array_unique($_SESSION["sproducts"]);
 
+        }
+    } else {
+        $value = $_POST['products'];
+
+
+    }
+
+}
 whatIsHappening();
 
 if (isset($_GET['food'])) {

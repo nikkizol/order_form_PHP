@@ -9,8 +9,13 @@
           rel="stylesheet"/>
     <title>Order food & drinks</title>
     <style>
-        .error {color: #FF0000;}
-        .good {color: green;}
+        .error {
+            color: #FF0000;
+        }
+
+        .good {
+            color: green;
+        }
     </style>
 </head>
 <body>
@@ -19,10 +24,10 @@
     <nav>
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link active"  href="?food=1">Order food</a>
+                <a class="nav-link active" href="?food=1">Order food</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  href="?food=0">Order drinks</a>
+                <a class="nav-link" href="?food=0">Order drinks</a>
             </li>
         </ul>
     </nav>
@@ -30,9 +35,10 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
-                <input type="text" id="email" name="email" class="form-control" value="<?php echo $_SESSION["semail"] ?>"/>
-                <span class="error"><?php echo $emailErr;?></span>
-                <span class="good"><?php echo $emailG;?></span>
+                <input type="text" id="email" name="email" class="form-control"
+                       value="<?php echo $_SESSION["semail"] ?>"/>
+                <span class="error"><?php echo $emailErr; ?></span>
+                <span class="good"><?php echo $emailG; ?></span>
             </div>
             <div></div>
         </div>
@@ -43,49 +49,56 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="street">Street:</label>
-                    <input type="text" name="street" id="street" class="form-control" value="<?php echo $_SESSION["sstreet"] ?>">
-                    <span class="error"><?php echo $streetErr;?></span>
-                    <span class="good"><?php echo $streetG;?></span>
+                    <input type="text" name="street" id="street" class="form-control"
+                           value="<?php echo $_SESSION["sstreet"] ?>">
+                    <span class="error"><?php echo $streetErr; ?></span>
+                    <span class="good"><?php echo $streetG; ?></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number:</label>
-                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo $_SESSION["sstreetnumber"] ?>">
-                    <span class="error"><?php echo $streetNumbErr;?></span>
-                    <span class="good"><?php echo $streetNumbG;?></span>
+                    <input type="text" id="streetnumber" name="streetnumber" class="form-control"
+                           value="<?php echo $_SESSION["sstreetnumber"] ?>">
+                    <span class="error"><?php echo $streetNumbErr; ?></span>
+                    <span class="good"><?php echo $streetNumbG; ?></span>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" class="form-control" value="<?php echo $_SESSION["scity"] ?>">
-                    <span class="error"><?php echo $cityErr;?></span>
-                    <span class="good"><?php echo $cityG;?></span>
+                    <input type="text" id="city" name="city" class="form-control"
+                           value="<?php echo $_SESSION["scity"] ?>">
+                    <span class="error"><?php echo $cityErr; ?></span>
+                    <span class="good"><?php echo $cityG; ?></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
-                    <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?php echo $_SESSION["szipcode"] ?>">
-                    <span class="error"><?php echo $zipcodeErr;?></span>
-                    <span class="good"><?php echo $zipcodeG;?></span>
+                    <input type="text" id="zipcode" name="zipcode" class="form-control"
+                           value="<?php echo $_SESSION["szipcode"] ?>">
+                    <span class="error"><?php echo $zipcodeErr; ?></span>
+                    <span class="good"><?php echo $zipcodeG; ?></span>
                 </div>
             </div>
         </fieldset>
 
         <fieldset>
             <legend>Products</legend>
-            <?php foreach ($products AS $i => $product): ?>
+            <?php foreach ($products as $i => $product): ?>
                 <label>
-                    <input type="checkbox" value="1" name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?> -
-                    &euro; <?php echo number_format($product['price'], 2) ?></label><br />
+                    <input type="checkbox" value="<?php echo $product['name'] ?>" name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?>
+                    -
+                    &euro; <?php echo number_format($product['price'], 2) ?></label><br/>
             <?php endforeach; ?>
         </fieldset>
-        
+
         <label>
-            <input type="checkbox" name="express_delivery" value="5" /> 
-            Express delivery (+ 5 EUR) 
+            <input type="checkbox" name="express_delivery" value="5"/>
+            Express delivery (+ 5 EUR)
         </label>
-            
+
         <button type="submit" name="submit" class="btn btn-primary">Order!</button>
     </form>
+    <span class="error"><?php echo $productsErr; ?></span>
+    <span class="good"><?php echo $productsG; ?></span>
 
     <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>
 </div>
