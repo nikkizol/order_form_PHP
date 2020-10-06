@@ -34,6 +34,10 @@ if (!isset($_SESSION["sproducts"])) {
     $_SESSION["sproducts"] = [];
 }
 
+if (!isset($_SESSION["express"])) {
+    $_SESSION["express"] = "";
+}
+
 function whatIsHappening()
 {
 //    echo '<h2>$_GET</h2>';
@@ -136,6 +140,11 @@ if (isset($_POST['submit'])) {
     $_SESSION["sstreetnumber"] = $streetNumber;
     $_SESSION["scity"] = $city;
     $_SESSION["szipcode"] = $zipcode;
+    if (isset($_POST["express_delivery"])) {
+        $_SESSION["express"] = $_POST["express_delivery"];
+    } else {
+        $_SESSION["express"] = "";
+    }
     if (isset($_POST['products'])) {
         foreach ($_POST['products'] as $value) {
             $array = array_push($_SESSION["sproducts"], $value);
@@ -170,5 +179,10 @@ if (isset($_GET['food'])) {
         ];
     }
 }
+
+//if (isset($_SESSION["sproducts"]) && in_array($products['price'], $_SESSION["sproducts"])) {
+//    echo ;
+//}
+echo array_sum($_SESSION["sproducts"]);
 
 require 'form-view.php';

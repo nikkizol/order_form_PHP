@@ -90,7 +90,7 @@
         </fieldset>
 
         <label>
-            <input type="checkbox" name="express_delivery" value="5" <?php if (isset($_POST['express_delivery'])) echo "checked='checked'"; ?>/>
+            <input type="checkbox" name="express_delivery" value="5" <?php if (!empty($_SESSION["express"])) echo "checked='checked'"; ?>/>
             Express delivery (+ 5 EUR)
         </label>
 
