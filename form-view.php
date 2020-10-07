@@ -84,13 +84,15 @@
             <legend>Products</legend>
             <?php foreach ($products as $i => $product): ?>
                 <label>
-                    <input type="checkbox" value="<?php echo $product['name']; ?>" <?php if (isset($_SESSION["sproducts"]) && in_array($product['name'], $_SESSION["sproducts"])) { echo "checked='checked'"; } ?> name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?>
+                    <input type="checkbox"
+                           value="<?php echo $product['price']; ?>" <?php if (isset($_SESSION["sproducts"]) && in_array($product['name'], $_SESSION["sproducts"])) {echo "checked='checked'";} ?> name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?>
                     &euro; <?php echo number_format($product['price'], 2) ?></label><br/>
             <?php endforeach; ?>
         </fieldset>
 
         <label>
-            <input type="checkbox" name="express_delivery" value="5" <?php if (!empty($_SESSION["express"])) echo "checked='checked'"; ?>/>
+            <input type="checkbox" name="express_delivery"
+                   value="5" <?php if (!empty($_SESSION["express"])) echo "checked='checked'"; ?>/>
             Express delivery (+ 5 EUR)
         </label>
 

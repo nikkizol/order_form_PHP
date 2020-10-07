@@ -133,8 +133,8 @@ if (isset($_POST['submit'])) {
         } else {
             $msg = date("H:i", strtotime('+45 minutes'));
         }
-        echo  '<div class="p-3 mb-2 bg-success text-white">Thank you for your order! The estimated time of delivery '.$msg.'</div>';
-    };
+        echo '<div class="p-3 mb-2 bg-success text-white">Thank you for your order! The estimated time of delivery ' . $msg . '</div>';
+    }
     $_SESSION["semail"] = $email;
     $_SESSION["sstreet"] = $street;
     $_SESSION["sstreetnumber"] = $streetNumber;
@@ -148,17 +148,33 @@ if (isset($_POST['submit'])) {
     if (isset($_POST['products'])) {
         foreach ($_POST['products'] as $value) {
             $array = array_push($_SESSION["sproducts"], $value);
-            $_SESSION["sproducts"] = array_unique($_SESSION["sproducts"]);
+            $_SESSION["sproducts"];
 
         }
     } else {
         $value = $_POST['products'];
 
-
     }
 
 }
-
+//$products1 = [
+//    ['name' => 'Club Ham', 'price' => 3.20],
+//    ['name' => 'Club Cheese', 'price' => 3],
+//    ['name' => 'Club Cheese & Ham', 'price' => 4],
+//    ['name' => 'Club Chicken', 'price' => 4],
+//    ['name' => 'Club Salmon', 'price' => 5],
+//    ['name' => 'Cola', 'price' => 2],
+//    ['name' => 'Fanta', 'price' => 2],
+//    ['name' => 'Sprite', 'price' => 2],
+//    ['name' => 'Ice-tea', 'price' => 3],
+//];
+//
+//$pr = [];
+//$price = array_intersect_key($products1, [$_SESSION["sproducts"]]);
+//for ($i=0; $i<count($price); $i++ ){
+//    array_push($pr,$price[$i]['price']);
+//    $totalValue = array_sum($pr);
+//}
 whatIsHappening();
 
 if (isset($_GET['food'])) {
@@ -179,10 +195,6 @@ if (isset($_GET['food'])) {
         ];
     }
 }
-
-//if (isset($_SESSION["sproducts"]) && in_array($products['price'], $_SESSION["sproducts"])) {
-//    echo ;
-//}
-echo array_sum($_SESSION["sproducts"]);
+$totalValue = array_sum($_SESSION["sproducts"] )+$_SESSION["express"];
 
 require 'form-view.php';
