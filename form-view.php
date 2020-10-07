@@ -85,7 +85,7 @@
             <?php foreach ($products as $i => $product): ?>
                 <label>
                     <input type="checkbox"
-                           value="<?php echo $product['price']; ?>" <?php if (isset($_SESSION["sproducts"]) && in_array($product['name'], $_SESSION["sproducts"])) {echo "checked='checked'";} ?> name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?>
+                           value="<?php echo $product['name']; ?>" <?php if (!empty($prodArray) && in_array($product['name'], $prodArray)) {echo "checked='checked'";   }  ?> name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?>
                     &euro; <?php echo number_format($product['price'], 2) ?></label><br/>
             <?php endforeach; ?>
         </fieldset>
@@ -101,7 +101,7 @@
     <span class="error"><?php echo $productsErr; ?></span>
     <span class="good"><?php echo $productsG; ?></span>
 
-    <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>
+    <footer>You already ordered <strong>&euro; <?php echo $totalValue + $_SESSION["express"] ?></strong> in food and drinks.</footer>
 </div>
 
 <style>
