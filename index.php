@@ -54,6 +54,7 @@ function whatIsHappening()
 }
 
 //your products with their price.
+$total = 0;
 $totalValue = 0;
 $products = [
     ['name' => 'Club Ham', 'price' => 3.20],
@@ -156,20 +157,27 @@ $prodArray = [];
 if (isset($_POST['products'])) {
     foreach ($_POST['products'] as $value) {
         array_push($prodArray, $value);
-//        var_dump($prodArray);
     }
 } else {
     $prodArray = [];
 
 }
 
-// Get the price of selected products
 
-foreach ($products as $product) {
-    if (!empty($prodArray) && in_array($product['name'], $prodArray)) {
-        $total = $totalValue += $product['price'];
+for ($i = 0; $i < count($prodArray); $i++) {
+    $newArr = [];
+$count = $prodArray[$i];
+for ( $j=0; $j < $count; $j++) {
+    array_push($newArr, $products[$i]);
+}
+    var_dump($newArr);
+    $yourorder = [];
+    for ($x = 0; $x < count($newArr); $x++) {
+        var_dump($total = $totalValue+=$newArr[$x]['price']);
+            var_dump($yourorder = $newArr[$x]['name']);
     }
 }
+
 
 /* After you press the order button, it checks if there is no errors, also checks if you selected express delivery or not,
 and sends email to customer*/
@@ -181,7 +189,7 @@ if (isset($_POST['submit'])) {
             $delivery = "❌";
         } else {
             $msg = date("H:i", strtotime('+45 minutes'));
-            $total = $totalValue + $_SESSION["express"];
+            $total += $_SESSION["express"];
             $delivery = "✅";
         }
         echo '<div class="p-3 mb-2 bg-success text-white">Thank you for your order! The estimated time of delivery ' . $msg . '</div>';
@@ -210,7 +218,7 @@ if (isset($_POST['submit'])) {
                 <th>Zipcode:</th><td>' . $zipcode . '</td>
             </tr>
             <tr>
-                <th>Your order:</th><td>' . implode(", ", $prodArray) . '</td>
+                <th>Your order:</th><td>' . $yourorder . '</td>
             </tr>
             <tr>
                 <th>Express delivery (5 euro extra):</th><td>' . $delivery . '</td>

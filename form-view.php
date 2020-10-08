@@ -84,9 +84,9 @@
             <legend>Products</legend>
             <?php foreach ($products as $i => $product): ?>
                 <label>
-                    <input type="checkbox"
-                           value="<?php echo $product['name']; ?>" <?php if (!empty($prodArray) && in_array($product['name'], $prodArray)) {
-                        echo "checked='checked'";
+                    <input type="text"
+                           value="" <?php if (!empty($prodArray) && in_array(2, $prodArray)) {
+                        echo "";
                     } ?> name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?>
                     &euro; <?php echo number_format($product['price'], 2) ?></label><br/>
             <?php endforeach; ?>
@@ -103,7 +103,7 @@
     <span class="error"><?php echo $productsErr; ?></span>
     <span class="good"><?php echo $productsG; ?></span>
 
-    <footer>You already ordered <strong>&euro; <?php echo $totalValue + $_SESSION["express"] ?></strong> in food and
+    <footer>You already ordered <strong>&euro; <?php echo $total + $_SESSION["express"] ?></strong> in food and
         drinks.
     </footer>
 </div>
