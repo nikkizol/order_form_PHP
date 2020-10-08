@@ -9,6 +9,7 @@ error_reporting(E_ALL);
 
 //we are going to use session variables so we need to enable sessions
 session_start();
+
 //SET SESSIONS TO DEFAULT
 
 if (!isset($_SESSION["semail"])) {
@@ -37,6 +38,8 @@ if (!isset($_SESSION["szipcode"])) {
 if (!isset($_SESSION["express"])) {
     $_SESSION["express"] = 0;
 }
+
+//whatIsHappening
 
 function whatIsHappening()
 {
@@ -83,14 +86,11 @@ if (isset($_GET['food'])) {
 
 }
 
-
-//$totalValue = 0;
-
 // define variables and set to empty values
 $emailErr = $streetErr = $streetNumbErr = $cityErr = $zipcodeErr = $productsErr = "";
 $emailG = $streetG = $streetNumbG = $cityG = $zipcodeG = $productsG = "";
 
-
+//Checking if the format is good
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset ($_POST["email"])) {
         $email = $_POST["email"];
@@ -150,6 +150,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }
 
+// Save selected products in to array
+
 $prodArray = [];
 if (isset($_POST['products'])) {
     foreach ($_POST['products'] as $value) {
@@ -160,13 +162,17 @@ if (isset($_POST['products'])) {
     $prodArray = [];
 
 }
+
+// Get the price of selected products
+
 foreach ($products as $product) {
     if (!empty($prodArray) && in_array($product['name'], $prodArray)) {
-        $totalValue += $product['price'];
+        $total = $totalValue += $product['price'];
     }
 }
 
-//var_dump($totalValue);
+/* After you press the order button, it checks if there is no errors, also checks if you selected express delivery or not,
+and sends email to customer*/
 
 if (isset($_POST['submit'])) {
     if (empty($emailErr) && empty($streetErr) && empty($streetNumbErr) && empty($cityErr) && empty($zipcodeErr) && empty($productsErr)) {
@@ -179,44 +185,47 @@ if (isset($_POST['submit'])) {
             $delivery = "✅";
         }
         echo '<div class="p-3 mb-2 bg-success text-white">Thank you for your order! The estimated time of delivery ' . $msg . '</div>';
+
+// EMAIL
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $htmlContent = ' 
-    <html> 
-    <head> 
-    </head> 
-    <body> 
-        <h1>Thanks you for choosing  us!</h1> 
+        $htmlContent = '
+    <html>
+    <head>
+    </head>
+    <body>
+        <h1>Thanks you for choosing  us!</h1>
         <h3>Thank you for your order! The estimated time of delivery ' . $msg . '</h3>
-        <table cellspacing="0" style="border: 2px solid sandybrown; width: 100%;"> 
-            <tr style="background-color: #e0e0e0;"> 
-                <th>Email:</th><td>' . $email . '</td> 
-            </tr> 
-             <tr> 
-                <th>Street:</th><td>' . $street . '  ' . $streetNumber . '</td> 
-            </tr> 
-            <tr> 
-                <th>City:</th><td>' . $city . '</td> 
-            </tr> 
-             <tr> 
-                <th>Zipcode:</th><td>' . $zipcode . '</td> 
-            </tr> 
-            <tr> 
-                <th>Your order:</th><td>' . implode(", ", $prodArray) . '</td> 
-            </tr> 
-            <tr> 
-                <th>Total Amount:</th><td>' . $total . '&euro;</td> 
-            </tr> 
-            <tr> 
-                <th>Express delivery (5 euro extra):</th><td>' . $delivery . '</td> 
-            </tr> 
-        </table> 
-    </body> 
+        <table cellspacing="0" style="border: 2px solid sandybrown; width: 100%;">
+            <tr style="background-color: #e0e0e0;">
+                <th>Email:</th><td>' . $email . '</td>
+            </tr>
+             <tr>
+                <th>Street:</th><td>' . $street . '  ' . $streetNumber . '</td>
+            </tr>
+            <tr>
+                <th>City:</th><td>' . $city . '</td>
+            </tr>
+             <tr>
+                <th>Zipcode:</th><td>' . $zipcode . '</td>
+            </tr>
+            <tr>
+                <th>Your order:</th><td>' . implode(", ", $prodArray) . '</td>
+            </tr>
+            <tr>
+                <th>Express delivery (5 euro extra):</th><td>' . $delivery . '</td>
+            </tr>
+             <tr>
+                <th>Total Amount:</th><td>' . $total . '&euro;</td>
+            </tr>
+        </table>
+    </body>
     </html>';
 
         mail($email, "Order", $htmlContent, $headers);
 
     }
+// Declare Sessions
     $_SESSION["semail"] = $email;
     $_SESSION["sstreet"] = $street;
     $_SESSION["sstreetnumber"] = $streetNumber;
