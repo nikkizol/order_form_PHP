@@ -35,7 +35,7 @@ if (!isset($_SESSION["szipcode"])) {
 //}
 
 if (!isset($_SESSION["express"])) {
-    $_SESSION["express"] = "";
+    $_SESSION["express"] = 0;
 }
 
 function whatIsHappening()
@@ -60,12 +60,29 @@ $products = [
     ['name' => 'Club Salmon', 'price' => 5]
 ];
 
-//$products = [
-//    ['name' => 'Cola', 'price' => 2],
-//    ['name' => 'Fanta', 'price' => 2],
-//    ['name' => 'Sprite', 'price' => 2],
-//    ['name' => 'Ice-tea', 'price' => 3],
-//];
+if (isset($_GET['food'])) {
+    if ($_GET['food'] == '1') {
+        $food = 1;
+        $products = [
+            ['name' => 'Club Ham', 'price' => 3.20],
+            ['name' => 'Club Cheese', 'price' => 3],
+            ['name' => 'Club Cheese & Ham', 'price' => 4],
+            ['name' => 'Club Chicken', 'price' => 4],
+            ['name' => 'Club Salmon', 'price' => 5]
+        ];
+    } elseif ($_GET['food'] == '0') {
+        $food = 0;
+        $products = [
+            ['name' => 'Cola', 'price' => 2],
+            ['name' => 'Fanta', 'price' => 2],
+            ['name' => 'Sprite', 'price' => 2],
+            ['name' => 'Ice-tea', 'price' => 3],
+        ];
+
+    }
+
+}
+
 
 //$totalValue = 0;
 
@@ -131,28 +148,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["express"] = 0;
     }
 
-    $prodArray = [];
-    if (isset($_POST['products'])) {
-        foreach ($_POST['products'] as $value) {
-            array_push($prodArray, $value);
-//            $prodArray = array_unique($_SESSION["sproducts"]);
-            var_dump($prodArray);
-        }
-    } else {
-        $prodArray = [];
+}
 
+$prodArray = [];
+if (isset($_POST['products'])) {
+    foreach ($_POST['products'] as $value) {
+        array_push($prodArray, $value);
+//        var_dump($prodArray);
     }
+} else {
+    $prodArray = [];
 
-    $order = array();
-    for ($i=0; $i<count($products); $i++ ){
-        if (isset($_POST['products'][$i])){
-            array_push($order, $products[$i]['name']);
-            $total = $totalValue += $products[$i]['price'] ;
-        }
+}
+foreach ($products as $product) {
+    if (!empty($prodArray) && in_array($product['name'], $prodArray)) {
+        $totalValue += $product['price'];
     }
 }
 
-
+//var_dump($totalValue);
 
 if (isset($_POST['submit'])) {
     if (empty($emailErr) && empty($streetErr) && empty($streetNumbErr) && empty($cityErr) && empty($zipcodeErr) && empty($productsErr)) {
@@ -161,7 +175,7 @@ if (isset($_POST['submit'])) {
             $delivery = "❌";
         } else {
             $msg = date("H:i", strtotime('+45 minutes'));
-         $total = $totalValue+$_SESSION["express"];
+            $total = $totalValue + $_SESSION["express"];
             $delivery = "✅";
         }
         echo '<div class="p-3 mb-2 bg-success text-white">Thank you for your order! The estimated time of delivery ' . $msg . '</div>';
@@ -210,46 +224,7 @@ if (isset($_POST['submit'])) {
     $_SESSION["szipcode"] = $zipcode;
 }
 
-//$products1 = [
-//    ['name' => 'Club Ham', 'price' => 3.20],
-//    ['name' => 'Club Cheese', 'price' => 3],
-//    ['name' => 'Club Cheese & Ham', 'price' => 4],
-//    ['name' => 'Club Chicken', 'price' => 4],
-//    ['name' => 'Club Salmon', 'price' => 5],
-//    ['name' => 'Cola', 'price' => 2],
-//    ['name' => 'Fanta', 'price' => 2],
-//    ['name' => 'Sprite', 'price' => 2],
-//    ['name' => 'Ice-tea', 'price' => 3],
-//];
-//
-//$pr = [];
-//$price = array_intersect_key($products1, $prodArray);
-//for ($i=0; $i<count($price); $i++ ){
-//    array_push($pr,$price[$i]['price']);
-//    $totalValue = array_sum($pr);
-//}
-//echo $totalValue;
-
 whatIsHappening();
-
-if (isset($_GET['food'])) {
-    if ($_GET['food'] == '1') {
-        $products = [
-            ['name' => 'Club Ham', 'price' => 3.20],
-            ['name' => 'Club Cheese', 'price' => 3],
-            ['name' => 'Club Cheese & Ham', 'price' => 4],
-            ['name' => 'Club Chicken', 'price' => 4],
-            ['name' => 'Club Salmon', 'price' => 5]
-        ];
-    } elseif ($_GET['food'] == '0') {
-        $products = [
-            ['name' => 'Cola', 'price' => 2],
-            ['name' => 'Fanta', 'price' => 2],
-            ['name' => 'Sprite', 'price' => 2],
-            ['name' => 'Ice-tea', 'price' => 3],
-        ];
-    }
-}
 
 
 require 'form-view.php';

@@ -31,7 +31,7 @@
             </li>
         </ul>
     </nav>
-    <form method="post" action="/index.php" autocomplete="on">
+    <form method="post" autocomplete="on">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
@@ -85,7 +85,9 @@
             <?php foreach ($products as $i => $product): ?>
                 <label>
                     <input type="checkbox"
-                           value="<?php echo $product['name']; ?>" <?php if (!empty($prodArray) && in_array($product['name'], $prodArray)) {echo "checked='checked'";   }  ?> name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?>
+                           value="<?php echo $product['name']; ?>" <?php if (!empty($prodArray) && in_array($product['name'], $prodArray)) {
+                        echo "checked='checked'";
+                    } ?> name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?>
                     &euro; <?php echo number_format($product['price'], 2) ?></label><br/>
             <?php endforeach; ?>
         </fieldset>
@@ -101,7 +103,9 @@
     <span class="error"><?php echo $productsErr; ?></span>
     <span class="good"><?php echo $productsG; ?></span>
 
-    <footer>You already ordered <strong>&euro; <?php echo $totalValue + $_SESSION["express"] ?></strong> in food and drinks.</footer>
+    <footer>You already ordered <strong>&euro; <?php echo $totalValue + $_SESSION["express"] ?></strong> in food and
+        drinks.
+    </footer>
 </div>
 
 <style>
