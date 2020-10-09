@@ -12,23 +12,33 @@ session_start();
 
 //SET SESSIONS TO DEFAULT
 
-if (!isset($_SESSION["semail"])) {
-    $_SESSION["semail"] = "";
+$email = "";
+$street = "";
+$streetNumber = "";
+$city = "";
+$zipcode = "";
+
+
+if (isset($_COOKIE["semail"])) {
+    $email = $_COOKIE['semail'];
 }
-if (!isset($_SESSION["sstreet"])) {
-    $_SESSION["sstreet"] = "";
+if (isset($_COOKIE["sstreet"])) {
+    $street = $_COOKIE['sstreet'];
 }
 
-if (!isset($_SESSION["sstreetnumber"])) {
-    $_SESSION["sstreetnumber"] = "";
+if (isset($_COOKIE["sstreetnumber"])) {
+    $streetNumber = $_COOKIE['sstreetnumber'];
+
 }
 
-if (!isset($_SESSION["scity"])) {
-    $_SESSION["scity"] = "";
+if (isset($_COOKIE["scity"])) {
+    $city = $_COOKIE['scity'];
+
 }
 
-if (!isset($_SESSION["szipcode"])) {
-    $_SESSION["szipcode"] = "";
+if (isset($_COOKIE["szipcode"])) {
+    $zipcode = $_COOKIE['szipcode'];
+
 }
 
 //if (!isset($_SESSION["sproducts"])) {
@@ -166,15 +176,13 @@ if (isset($_POST['products'])) {
 
 for ($i = 0; $i < count($prodArray); $i++) {
     $newArr = [];
-$count = $prodArray[$i];
-for ( $j=0; $j < $count; $j++) {
-    array_push($newArr, $products[$i]);
-}
+    $count = $prodArray[$i];
+    for ($j = 0; $j < $count; $j++) {
+        array_push($newArr, $products[$i]);
+    }
     var_dump($newArr);
-    $yourorder = [];
     for ($x = 0; $x < count($newArr); $x++) {
-        var_dump($total = $totalValue+=$newArr[$x]['price']);
-            var_dump($yourorder = $newArr[$x]['name']);
+        var_dump($total = $totalValue += $newArr[$x]['price']);
     }
 }
 
@@ -233,13 +241,19 @@ if (isset($_POST['submit'])) {
         mail($email, "Order", $htmlContent, $headers);
 
     }
-// Declare Sessions
-    $_SESSION["semail"] = $email;
-    $_SESSION["sstreet"] = $street;
-    $_SESSION["sstreetnumber"] = $streetNumber;
-    $_SESSION["scity"] = $city;
-    $_SESSION["szipcode"] = $zipcode;
+//// Declare Sessions
+//    $_COOKIE["semail"] = $email;
+//    $_COOKIE["sstreet"] = $street;
+//    $_COOKIE["sstreetnumber"] = $streetNumber;
+//    $_COOKIE["scity"] = $city;
+//    $_COOKIE["szipcode"] = $zipcode;
 }
+setcookie("semail", $email, time() + (86400 * 30), "/");
+setcookie("sstreet", $street, time() + (86400 * 30), "/");
+setcookie("sstreetnumber", $streetNumber, time() + (86400 * 30), "/");
+setcookie("scity", $city, time() + (86400 * 30), "/");
+setcookie("szipcode", $zipcode, time() + (86400 * 30), "/");
+
 
 whatIsHappening();
 

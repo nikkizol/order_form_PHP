@@ -36,7 +36,7 @@
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
                 <input type="text" id="email" name="email" class="form-control"
-                       value="<?php echo $_SESSION["semail"] ?>"/>
+                       value="<?php echo $email ?>"/>
                 <span class="error"><?php echo $emailErr; ?></span>
                 <span class="good"><?php echo $emailG; ?></span>
             </div>
@@ -50,14 +50,14 @@
                 <div class="form-group col-md-6">
                     <label for="street">Street:</label>
                     <input type="text" name="street" id="street" class="form-control"
-                           value="<?php echo $_SESSION["sstreet"] ?>">
+                           value="<?php echo $street?>">
                     <span class="error"><?php echo $streetErr; ?></span>
                     <span class="good"><?php echo $streetG; ?></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number:</label>
                     <input type="text" id="streetnumber" name="streetnumber" class="form-control"
-                           value="<?php echo $_SESSION["sstreetnumber"] ?>">
+                           value="<?php echo $streetNumber ?>">
                     <span class="error"><?php echo $streetNumbErr; ?></span>
                     <span class="good"><?php echo $streetNumbG; ?></span>
                 </div>
@@ -66,14 +66,14 @@
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
                     <input type="text" id="city" name="city" class="form-control"
-                           value="<?php echo $_SESSION["scity"] ?>">
+                           value="<?php echo $city ?>">
                     <span class="error"><?php echo $cityErr; ?></span>
                     <span class="good"><?php echo $cityG; ?></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
                     <input type="text" id="zipcode" name="zipcode" class="form-control"
-                           value="<?php echo $_SESSION["szipcode"] ?>">
+                           value="<?php echo $zipcode ?>">
                     <span class="error"><?php echo $zipcodeErr; ?></span>
                     <span class="good"><?php echo $zipcodeG; ?></span>
                 </div>
